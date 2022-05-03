@@ -1,9 +1,22 @@
-// Container that will contain boxes
+// Find element and put them in varible
 const container = document.querySelector('#container');
-const btnAmountOfSquares = document.querySelector('.amountOfSquares');
-btnAmountOfSquares.addEventListener('click', changeAmountOfSquare);
+
+const btnAmountOfSquares = Array.from(document.querySelectorAll('.amountOfSquares'));
+btnAmountOfSquares.forEach(btn => btn.addEventListener('click', changeAmountOfSquare));
+
+const btnSquaresUserChoice = document.querySelector('.amountOfSquaresOwnChoice');
+btnSquaresUserChoice.addEventListener('click', squareUserChoice);
+
+const inputUserChoice = document.querySelector('#amountChoiceID');
+
 const btnNewColor = document.querySelector('.newColor');
 btnNewColor.addEventListener('click', randomRGB);
+
+const btnReset = document.querySelector('.reset');
+btnReset.addEventListener('click', resetAll);
+
+const btns = Array.from(document.querySelectorAll('.btn'));
+
 //Default color of squares
 let rgbColor = "11, 87, 62";
 //Start default amount of squares
@@ -13,6 +26,7 @@ makeSquares(8);
 that will listen for mouseover and then call the function 
 changeBgColorHover*/
 function makeSquares(amount) {
+    console.log(amount);
     let squaresPerSide = amount;
     let amountOfSquares = squaresPerSide * squaresPerSide;
     // Change the grid in container div
@@ -26,7 +40,7 @@ function makeSquares(amount) {
         div.addEventListener("mouseover", changeBgColorHover);
     }
 
-    }
+}
 
 /*Function that will change the backgroundcolor at hover. Color alpha 
 changes til the backgroundcolor disapears and then it starts over again */
@@ -34,16 +48,12 @@ function changeBgColorHover(e) {
 
     let bgColor = e.target.style.backgroundColor;
 
-    console.log(bgColor)
-
     switch (bgColor) {
         case "":
             e.target.style.backgroundColor = `rgb(${rgbColor})`;
-            console.log(rgbColor);
             break;
         case `rgb(${rgbColor})`:
             e.target.style.backgroundColor = `rgba(${rgbColor}, 0.8)`;
-            console.log(rgbColor);
             break;
         case  `rgba(${rgbColor}, 0.8)`:
             e.target.style.backgroundColor =  `rgba(${rgbColor}, 0.6)`;
@@ -59,7 +69,6 @@ function changeBgColorHover(e) {
             break;
         default:
             break;
-
     }
 }
 
@@ -74,6 +83,30 @@ function randomRGB() {
     let b = randomBetween(0, 255);
     rgbColor = `${r}, ${g}, ${b}`;
     
+    changeColorsLayout();
+}
+
+function changeColorsLayout() {
+    document.querySelector('header').style.borderColor = `rgb(${rgbColor})`;
+    btns.forEach(btn => btn.style.borderColor = `rgb(${rgbColor})`);
+    btns.forEach(btn => btn.style.color = `rgb(${rgbColor})`); 
+    btnSquaresUserChoice.style.borderColor = `rgb(${rgbColor})`;
+    btnSquaresUserChoice.style.color = `rgb(${rgbColor})`;
+    inputUserChoice.style.borderColor = `rgb(${rgbColor})`
+    inputUserChoice.style.color = `rgb(${rgbColor})`;
+}
+
+function squareUserChoice(e) {
+
+    // Sets backgroundcolor to ""
+    let boxes = Array.from(document.querySelectorAll('.box'));
+    boxes.forEach(box => box.style.backgroundColor = "");
+
+    let usersChoice = document.getElementById('amountChoiceID').value;
+    console.log(usersChoice);
+
+    makeSquares(usersChoice);
+
 }
 
 /* Function that will change the amount of squares */
@@ -84,18 +117,30 @@ function changeAmountOfSquare(e) {
     boxes.forEach(box => box.style.backgroundColor = "");
 
     // Users choice 
-    let amount  = prompt("Choose a number of squares per side for the new grid (Max 80)");
+    let amount  = e.target.value;
     
    // Checks if amount is bigger then 80
     if(amount  > 80) {
         alert("Your number is to high. Pick a new number")
-       amount  = prompt("Choose a number of squares per side for the new grid (Max 80)");
+        amount  = prompt("Choose a number of squares per side for the new grid (Max 80)");
     }
     // Checks if users choice is a number
     if (isNaN(amount)) {
         alert("You must pick a number");
-       amount  = prompt("Choose a number of squares per side for the new grid (Max 80)");
+        amount  = prompt("Choose a number of squares per side for the new grid (Max 80)");
     }
 
     makeSquares(amount);
+}
+
+function resetAll() {
+
+    makeSquares(8);
+
+    let boxes = Array.from(document.querySelectorAll('.box'));
+    boxes.forEach(box => box.style.backgroundColor = "");
+    usersChoice = document.getElementById('amountChoiceID').value = "";
+    rgbColor = "11, 87, 62";
+
+    changeColorsLayout();
 }
