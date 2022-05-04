@@ -5,7 +5,7 @@ const btnAmountOfSquares = Array.from(document.querySelectorAll('.amountOfSquare
 btnAmountOfSquares.forEach(btn => btn.addEventListener('click', changeAmountOfSquare));
 
 const btnSquaresUserChoice = document.querySelector('.amountOfSquaresOwnChoice');
-btnSquaresUserChoice.addEventListener('click', squareUserChoice);
+btnSquaresUserChoice.addEventListener('click', squareUserChoiceInput);
 
 const inputUserChoice = document.querySelector('#amountChoiceID');
 
@@ -37,11 +37,46 @@ function makeSquares(amount) {
     for (let i = 1; i <= amountOfSquares; i++) {
         let div = document.createElement('div');
         div.classList.add("box");
-
         container.appendChild(div); 
         div.addEventListener("mouseover", changeBgColorHover);
     }
 
+}
+
+/*Function that finds what the user has written in the text are and calls function makeSquares*/
+function squareUserChoiceInput(e) {
+
+    // Sets backgroundcolor to ""
+    let boxes = Array.from(document.querySelectorAll('.box'));
+    boxes.forEach(box => box.style.backgroundColor = "");
+
+    let usersChoice = document.getElementById('amountChoiceID').value;
+    console.log(usersChoice);
+
+    // Checks if amount is bigger then 80
+    if(usersChoice  > 80) {
+        alert("Your number is to high. Pick a new number under 80")
+    }
+    // Checks if users choice is a number
+    if (isNaN(usersChoice)) {
+        alert("You must pick a number");
+    }
+
+    makeSquares(usersChoice);
+}
+
+
+/* Function that will change the amount of squares */
+function changeAmountOfSquare(e) {
+
+    // Sets backgroundcolor to ""
+    let boxes = Array.from(document.querySelectorAll('.box'));
+    boxes.forEach(box => box.style.backgroundColor = "");
+
+    // Users choice  of button
+    let amount  = e.target.value;
+    
+    makeSquares(amount);
 }
 
 /*Function that will change the backgroundcolor at hover. Color alpha 
@@ -97,44 +132,6 @@ function changeColorsLayout() {
     btnSquaresUserChoice.style.color = `rgb(${rgbColor})`;
     inputUserChoice.style.borderColor = `rgb(${rgbColor})`
     inputUserChoice.style.color = `rgb(${rgbColor})`;
-}
-
-/*Function that finds what the user has written in the text are and calls function makeSquares*/
-function squareUserChoice(e) {
-
-    // Sets backgroundcolor to ""
-    let boxes = Array.from(document.querySelectorAll('.box'));
-    boxes.forEach(box => box.style.backgroundColor = "");
-
-    let usersChoice = document.getElementById('amountChoiceID').value;
-    //console.log(usersChoice);
-
-    makeSquares(usersChoice);
-}
-
-
-/* Function that will change the amount of squares */
-function changeAmountOfSquare(e) {
-
-    // Sets backgroundcolor to ""
-    let boxes = Array.from(document.querySelectorAll('.box'));
-    boxes.forEach(box => box.style.backgroundColor = "");
-
-    // Users choice 
-    let amount  = e.target.value;
-    
-   // Checks if amount is bigger then 80
-    if(amount  > 80) {
-        alert("Your number is to high. Pick a new number")
-        amount  = prompt("Choose a number of squares per side for the new grid (Max 80)");
-    }
-    // Checks if users choice is a number
-    if (isNaN(amount)) {
-        alert("You must pick a number");
-        amount  = prompt("Choose a number of squares per side for the new grid (Max 80)");
-    }
-
-    makeSquares(amount);
 }
 
 /*Function that will reset squares and layout to default*/
