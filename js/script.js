@@ -1,4 +1,4 @@
-// Find element and put them in varible
+// Find element and put them in varibles and add eventlisteners
 const container = document.querySelector('#container');
 
 const btnAmountOfSquares = Array.from(document.querySelectorAll('.amountOfSquares'));
@@ -27,6 +27,7 @@ that will listen for mouseover and then call the function
 changeBgColorHover*/
 function makeSquares(amount) {
     console.log(amount);
+    container.textContent = '';
     let squaresPerSide = amount;
     let amountOfSquares = squaresPerSide * squaresPerSide;
     // Change the grid in container div
@@ -36,6 +37,7 @@ function makeSquares(amount) {
     for (let i = 1; i <= amountOfSquares; i++) {
         let div = document.createElement('div');
         div.classList.add("box");
+
         container.appendChild(div); 
         div.addEventListener("mouseover", changeBgColorHover);
     }
@@ -86,6 +88,7 @@ function randomRGB() {
     changeColorsLayout();
 }
 
+/* Function that change the color of the layout based on random color picked when button newColor is pressed */
 function changeColorsLayout() {
     document.querySelector('header').style.borderColor = `rgb(${rgbColor})`;
     btns.forEach(btn => btn.style.borderColor = `rgb(${rgbColor})`);
@@ -96,6 +99,7 @@ function changeColorsLayout() {
     inputUserChoice.style.color = `rgb(${rgbColor})`;
 }
 
+/*Function that finds what the user has written in the text are and calls function makeSquares*/
 function squareUserChoice(e) {
 
     // Sets backgroundcolor to ""
@@ -103,11 +107,11 @@ function squareUserChoice(e) {
     boxes.forEach(box => box.style.backgroundColor = "");
 
     let usersChoice = document.getElementById('amountChoiceID').value;
-    console.log(usersChoice);
+    //console.log(usersChoice);
 
     makeSquares(usersChoice);
-
 }
+
 
 /* Function that will change the amount of squares */
 function changeAmountOfSquare(e) {
@@ -133,6 +137,7 @@ function changeAmountOfSquare(e) {
     makeSquares(amount);
 }
 
+/*Function that will reset squares and layout to default*/
 function resetAll() {
 
     makeSquares(8);
