@@ -53,10 +53,16 @@ function squareUserChoiceInput(e) {
     let usersChoice = document.getElementById('amountChoiceID').value;
     console.log(usersChoice);
 
-    // Checks if amount is bigger then 80
+    // Checks if users choice is bigger then 80
     if(usersChoice  > 80) {
         alert("Your number is to high. Pick a new number under 80")
     }
+
+    // Checks if users choice is a negative number
+    if(usersChoice  <= 0) {
+        alert("Your number is a negative number. Pick a new number over 0")
+    }
+
     // Checks if users choice is a number
     if (isNaN(usersChoice)) {
         alert("You must pick a number");
