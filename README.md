@@ -1,4 +1,4 @@
-# Square-Sketch
+# Square Sketch
 Did this Sketch game for learning more JavaScript and DOM manipulation. A grid is chosen and on mouseover the cells change color.
 
 ## Built with
